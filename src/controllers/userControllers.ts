@@ -1,7 +1,7 @@
 import User from "../models/user";
 import { hash, compare } from "bcrypt"
 import jwt from "jsonwebtoken"
-
+import bcrypt from 'bcrypt';
 // import { cloudinary } from "../config/cloudinary.js"
 
 
@@ -32,42 +32,41 @@ const createUser = async (req: Request, res: Response): Promise<void> => {
 
         const savedUser = await newUser.save();
 
-        res.status(200).send({ message: "Account created successfully!" });
+        res.status(201).send({ message: "Account created successfully!" });
 
     } catch (error: any) {
         res.status(400).send({ message: error.message });
     }
 };
 
-//Login
-// const loginUser = async (req, res) => {
-//     try {
-//         const { email, password } = req.body
+// Login
+const loginUser = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { email, password } = req.body;
 
-//         const user = await User.findOne({ email })
+        const user = await User.findOne({ email });
 
-//         if (!user) {
-//             throw new Error("User not found")
-//         }
-//         //comparing the user passwords
-//         const isMatch = await compare(password, user.password)
+        if (!user) {
+            throw new Error("User not found");
+        }
 
-//         if (!isMatch) {
-//             throw new Error("Passwords don't match")
-//         }
+        const isMatch = await bcrypt.compare(password, user.password);
 
-//         const token = jwt.sign({
-//             userId: user._id, email: user.email, username: user.username
-//         }, process.env.JWT_SECRET, { expiresIn: "30d" })
+        if (!isMatch) {
+            throw new Error("Incorrect password!");
+        }
 
-//         res.status(200).send({
-//             token, id: user.id
-//         })
-//     } catch (error) {
-//         res.status(500).send({ message: error.message })
-//     }
-// }
+        const token = jwt.sign({
+            userId: user._id, email: user.email, username: user.username
+        }, process.env.JWT_SECRET!, { expiresIn: "90d" });
 
+        res.status(200).send({
+            token, id: user.id
+        });
+    } catch (error: any) {
+        res.status(400).send({ message: error.message });
+    }
+};
 // const updateUser = async (req, res) => {
 //     try {
 //         const { id } = req.params
@@ -180,5 +179,5 @@ const createUser = async (req: Request, res: Response): Promise<void> => {
 //     }
 // }
 
-export { createUser }
-// loginUser, updateUser, updateUserPassword,  getUser, deleteUser }
+export { createUser, loginUser }
+// , updateUser, updateUserPassword,  getUser, deleteUser }
