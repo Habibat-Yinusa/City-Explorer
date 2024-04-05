@@ -22,33 +22,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.app = void 0;
-const express_1 = __importDefault(require("express"));
-const body_parser_1 = __importDefault(require("body-parser"));
-const cookie_parser_1 = __importDefault(require("cookie-parser"));
-const compression_1 = __importDefault(require("compression"));
-const cors_1 = __importDefault(require("cors"));
-const dotenv = __importStar(require("dotenv"));
-const db_1 = require("./config/db");
-const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
-dotenv.config();
-(0, db_1.connectDB)();
-const app = (0, express_1.default)();
-exports.app = app;
-const port = 3000;
-app.use((0, cors_1.default)({
-    credentials: true,
-}));
-//middlewares
-app.use((0, compression_1.default)());
-app.use((0, cookie_parser_1.default)());
-app.use(body_parser_1.default.json());
-//end-points
-app.use("/api/user", userRoutes_1.default);
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
-});
+const user = __importStar(require("../controllers/userControllers"));
+const express_1 = require("express");
+const router = (0, express_1.Router)();
+//signup
+router.post("/signup", user.createUser);
+//login
+router.post("/login", user.loginUser);
+exports.default = router;
