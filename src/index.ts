@@ -4,9 +4,11 @@ import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import cors from 'cors';
 import * as dotenv from "dotenv"
-import mongoose from 'mongoose'
 import { connectDB } from "./config/db"
 import userRoutes from "./routes/userRoutes";
+import chatbotRoute from "./routes/chatbotRoute";
+import { protect } from "./middlewares/authMiddleware";
+import {botware} from "./middlewares/botMiddleware"
 
 
 dotenv.config();
@@ -19,7 +21,6 @@ app.use(cors({
   credentials: true,
 }));
 
-
 //middlewares
 app.use(compression());
 app.use(cookieParser());
@@ -28,11 +29,11 @@ app.use(express.json())
 
 //end-points
 app.use("/user", userRoutes)
+app.use("/chat", chatbotRoute)
 
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
 
-// export { app }
 

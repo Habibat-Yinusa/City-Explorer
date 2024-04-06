@@ -2,6 +2,7 @@ import User from "../models/user";
 import { hash, compare } from "bcrypt"
 import jwt from "jsonwebtoken"
 import bcrypt from 'bcrypt';
+import runChat from "../services/chatbotService";
 // import { cloudinary } from "../config/cloudinary.js"
 
 
@@ -67,6 +68,13 @@ const loginUser = async (req: Request, res: Response): Promise<void> => {
         res.status(400).send({ message: error.message });
     }
 };
+const chatbot = async (req: Request, res: Response) => {
+    const message = req.body.message;
+    const reply = await runChat(message);
+    res.json(reply);
+
+   
+  }
 
 
-export { createUser, loginUser }
+export { createUser, loginUser, chatbot }

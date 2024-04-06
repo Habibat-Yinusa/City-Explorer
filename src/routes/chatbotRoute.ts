@@ -1,13 +1,12 @@
 import express, { Request, Response } from "express";
-import runChat from "../controllers/chatbot";
+import runChat from "../services/chatbotService"
 import { Router } from "express";
+import {chatbot} from "../controllers/chatbot";
+// import { botware } from "../middlewares/botMiddleware";
 
 
 const router = Router();
 
-router.post("/chatbot", async (req: Request, res, Response) => {
-    const message = req.body.message;
-    const reply = await runChat(message);
-    res.json(reply);
-  });
-  export default router
+router.post("/chatbot", chatbot);
+  
+export default router
