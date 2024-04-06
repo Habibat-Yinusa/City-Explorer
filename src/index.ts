@@ -29,7 +29,7 @@ app.use(express.json())
 
 //end-points
 app.use("/user", userRoutes)
-app.use("/chat", chatbotRoute)
+app.use("/", chatbotRoute)
 
 
 app.listen(port, () => {

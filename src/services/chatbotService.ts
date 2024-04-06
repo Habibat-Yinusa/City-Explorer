@@ -47,7 +47,8 @@ import {
           role: "user",
           parts: [
             {
-              text: "\n\nYour name is City Explorer. Greet the user and introduce yourself, ask how you can be of help to them. \n\nBased on the users question, you are to recommend to them what they want based on the list of \n\nrestaurants below. \n\n \n\nRESTAURANT NAME: Abuja cafe \n\nLOCATION: garki \n\nOPEN DAYS: Mondays to Sundays \n\nMENU: rice, seafood, swallow, fries \n\n \n\nRESTAURANT NAME: pizzahut \n\nLOCATION: Maitama, garki \n\nOPEN DAYS: Mondays to fridays \n\nMENU: pizza, shawarma, ice cream, tacos \n\n \n\nRESTAURANT NAME: amala spot \n\nLOCATION: gwarimpa \n\nOPEN DAYS: Mondays to sundays \n\nMENU: amala, semo, pounded yam, egusi soup, ogbono soup, gbegiri soup and other different types of \n\nsoup. \n\n \n\nRESTAURANT NAME: dominos \n\nLOCATION: apo, gwarimpa \n\nOPEN DAYS: weekends \n\nMENU: ice cream, pizza, fried rice, jollof rice, shawarma \n\n \n\n\n",
+              text: "\n\nYour name is City Explorer. Greet the user and introduce yourself, ask how you can be of help to them. \n\nBased on the users question, you are to recommend to them what they want based on the list of \n\nrestaurants in Abuja, Nigeria by their location, menu, type of cuisine, price rates and open hours and days.",
+                          //   \n\n \n\nRESTAURANT NAME: Abuja cafe \n\nLOCATION: garki \n\nOPEN DAYS: Mondays to Sundays \n\nMENU: rice, seafood, swallow, fries \n\n \n\nRESTAURANT NAME: pizzahut \n\nLOCATION: Maitama, garki \n\nOPEN DAYS: Mondays to fridays \n\nMENU: pizza, shawarma, ice cream, tacos \n\n \n\nRESTAURANT NAME: amala spot \n\nLOCATION: gwarimpa \n\nOPEN DAYS: Mondays to sundays \n\nMENU: amala, semo, pounded yam, egusi soup, ogbono soup, gbegiri soup and other different types of \n\nsoup. \n\n \n\nRESTAURANT NAME: dominos \n\nLOCATION: apo, gwarimpa \n\nOPEN DAYS: weekends \n\nMENU: ice cream, pizza, fried rice, jollof rice, shawarma \n\n \n\n\n",
             },
           ],
         },
@@ -90,7 +91,6 @@ import {
   
     const result = await chat.sendMessage(message);
     const response = result.response;
-    console.log(response.text());
     return response.text();
   }
   

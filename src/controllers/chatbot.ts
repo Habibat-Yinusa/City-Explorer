@@ -9,4 +9,4 @@ const chatbot = async (req: Request, res: Response) => {
    
   }
 
-export {chatbot }
+export { chatbot }
