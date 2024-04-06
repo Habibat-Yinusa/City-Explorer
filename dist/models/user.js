@@ -22,12 +22,25 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
+const crypto_1 = __importDefault(require("crypto"));
 const userSchema = new mongoose_1.Schema({
     username: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    passwordResetToken: { type: String },
+    passwordResetTokenExpires: { Date },
 });
+userSchema.methods.createResetPasswordToken = function () {
+    const resetToken = crypto_1.default.randomBytes(32).toString('hex');
+    this.passwordResetToken = crypto_1.default.createHash('sha256').update(resetToken).digest('hex');
+    this.passwordResetTokenExpires = Date.now() + 10 * 60 * 1000;
+    console.log(resetToken, this.passwordResetToken);
+    return resetToken;
+};
 const User = mongoose_1.default.model('User', userSchema);
 exports.default = User;
