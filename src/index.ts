@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 app.use(express.json())
 
 //end-points
-app.use("/api/user", userRoutes)
+app.use("/user", userRoutes)
 
 
 app.listen(port, () => {
