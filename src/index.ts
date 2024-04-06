@@ -26,7 +26,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 
 //end-points
-app.use("/api/user", userRoutes)
+app.use("/user", userRoutes)
 
 
 app.listen(port, () => {

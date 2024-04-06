@@ -46,7 +46,7 @@ app.use((0, compression_1.default)());
 app.use((0, cookie_parser_1.default)());
 app.use(body_parser_1.default.json());
 //end-points
-app.use("/api/user", userRoutes_1.default);
+app.use("/user", userRoutes_1.default);
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
