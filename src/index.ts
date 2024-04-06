@@ -24,6 +24,7 @@ app.use(cors({
 app.use(compression());
 app.use(cookieParser());
 app.use(bodyParser.json());
+app.use(express.json())
 
 //end-points
 app.use("/api/user", userRoutes)
@@ -33,5 +34,5 @@ app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
 
-export { app }
+// export { app }
 
