@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.forgotPassword = exports.loginUser = exports.createUser = void 0;
+exports.loginUser = exports.createUser = void 0;
 const user_1 = __importDefault(require("../models/user"));
 const bcrypt_1 = require("bcrypt");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -65,20 +65,26 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.loginUser = loginUser;
 // forgotPassword
-const forgotPassword = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    // GET USER BASED ON POSTED EMAIL
-    const user = yield user_1.default.findOne({ email: req.body.email });
-    if (!user) {
-        throw new Error("User doesn't exist, check email again");
+const forgotPassword = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        // GET USER BASED ON POSTED EMAIL
+        const user = yield user_1.default.findOne({ email: req.body.email });
+        if (!user) {
+            throw new Error("User doesn't exist, check email again");
+        }
+        // GENERATE A RANDOM RESET TOKEN
+        const resetToken = user.createResetPasswordToken();
+        yield user.save();
+        console.log(resetToken);
+        // SEND TOKEN TO USER EMAIL
+        // Respond to the request
+        res.status(200).json({
+            success: true,
+            message: "Token sent to email"
+        });
     }
-    // GENERATE A RANDOM RESET TOKEN
-    const resetToken = user.createResetPasswordToken();
-    yield user.save();
-    // SEND TOKEN TO USER EMAIL
-    // Respond to the request
-    res.status(200).json({
-        success: true,
-        message: "Token sent to email"
-    });
+    catch (error) {
+        res.status(400).send({ message: error.message });
+    }
 });
-exports.forgotPassword = forgotPassword;
+// , forgotPassword 

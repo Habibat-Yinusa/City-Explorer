@@ -33,7 +33,8 @@ const userSchema = new mongoose_1.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     passwordResetToken: { type: String },
-    passwordResetTokenExpires: { Date },
+    passwordResetTokenExpires: { type: Date },
+    // createResetPasswordToken(): { type: string },
 });
 userSchema.methods.createResetPasswordToken = function () {
     const resetToken = crypto_1.default.randomBytes(32).toString('hex');

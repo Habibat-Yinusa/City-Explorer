@@ -10,7 +10,6 @@ router.post("/signup", user.createUser);
 //login
 router.post("/login", user.loginUser)
 
-//forgotPassword
-router.post("/forgot-password", user.forgotPassword)
+
 
 export default router

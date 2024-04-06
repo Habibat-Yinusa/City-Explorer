@@ -30,6 +30,4 @@ const router = (0, express_1.Router)();
 router.post("/signup", user.createUser);
 //login
 router.post("/login", user.loginUser);
-//forgotPassword
-router.post("/forgotPassword", user.forgotPassword);
 exports.default = router;

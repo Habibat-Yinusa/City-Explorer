@@ -3,8 +3,6 @@ import { hash, compare } from "bcrypt"
 import jwt from "jsonwebtoken"
 import bcrypt from 'bcrypt';
 
-import runChat from "../services/chatbotService";
-import asyncErrorHandler from 'express-async-handler';
 // import CustomError from '../utils/customError';
 // import { cloudinary } from "../config/cloudinary.js"
 
@@ -72,44 +70,33 @@ const loginUser = async (req: Request, res: Response): Promise<void> => {
     }
 };
 
-const chatbot = async (req: Request, res: Response) => {
-    const message = req.body.message;
-    const reply = await runChat(message);
-    res.json(reply);
-
-   
-  }
-
-
-export { createUser, loginUser, chatbot }
-
-// // forgotPassword
-// const forgotPassword = async (req: Request, res: Response): Promise<void> => {
-//     try {
-//         // GET USER BASED ON POSTED EMAIL
-//     const user = await User.findOne({ email: req.body.email });
+// forgotPassword
+const forgotPassword = async (req: Request, res: Response): Promise<void> => {
+    try {
+        // GET USER BASED ON POSTED EMAIL
+    const user = await User.findOne({ email: req.body.email });
   
-//     if (!user) {
-//       throw new Error("User doesn't exist, check email again");
-//     }
+    if (!user) {
+      throw new Error("User doesn't exist, check email again");
+    }
   
-//     // GENERATE A RANDOM RESET TOKEN
-//     const resetToken: string = user.createResetPasswordToken();
-//     await user.save();
-//   console.log(resetToken);
+    // GENERATE A RANDOM RESET TOKEN
+    const resetToken: string = user.createResetPasswordToken();
+    await user.save();
+  console.log(resetToken);
   
-//     // SEND TOKEN TO USER EMAIL
+    // SEND TOKEN TO USER EMAIL
   
-//     // Respond to the request
-//     res.status(200).json({
-//       success: true,
-//       message: "Token sent to email"
-//     });
-//     } catch (error: any) {
-//         res.status(400).send({ message: error.message });
-//     }
+    // Respond to the request
+    res.status(200).json({
+      success: true,
+      message: "Token sent to email"
+    });
+    } catch (error: any) {
+        res.status(400).send({ message: error.message });
+    }
     
-// };
+};
 
 // exports.resetPassword = (req, res, next) => {
 
@@ -117,4 +104,4 @@ export { createUser, loginUser, chatbot }
 
 
 export { createUser, loginUser}
-//forgotPassword 
+// , forgotPassword 

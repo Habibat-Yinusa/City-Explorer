@@ -34,6 +34,7 @@ const cors_1 = __importDefault(require("cors"));
 const dotenv = __importStar(require("dotenv"));
 const db_1 = require("./config/db");
 const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
+const chatbotRoute_1 = __importDefault(require("./routes/chatbotRoute"));
 dotenv.config();
 (0, db_1.connectDB)();
 const app = (0, express_1.default)();
@@ -45,9 +46,10 @@ app.use((0, cors_1.default)({
 app.use((0, compression_1.default)());
 app.use((0, cookie_parser_1.default)());
 app.use(body_parser_1.default.json());
+app.use(express_1.default.json());
 //end-points
 app.use("/user", userRoutes_1.default);
+app.use("/", chatbotRoute_1.default);
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
-// export { app }
