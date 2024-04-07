@@ -4,6 +4,7 @@ import {
     HarmBlockThreshold,
   } from "@google/generative-ai";
   import dotenv from "dotenv";
+  
   dotenv.config();
   
   const MODEL_NAME = "gemini-1.0-pro";
@@ -90,7 +91,15 @@ import {
     });
   
     const result = await chat.sendMessage(message);
+    
+    
     const response = result.response;
+  
+    
+    
+    
+    
+    
     return response.text();
   }
   

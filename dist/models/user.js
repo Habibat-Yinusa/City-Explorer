@@ -34,6 +34,8 @@ const userSchema = new mongoose_1.Schema({
     password: { type: String, required: true },
     passwordResetToken: { type: String },
     passwordResetTokenExpires: { type: Date },
+    userMessages: { type: [String], default: [] },
+    botReplies: { type: [String], default: [] },
     // createResetPasswordToken(): { type: string },
 });
 userSchema.methods.createResetPasswordToken = function () {

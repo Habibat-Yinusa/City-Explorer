@@ -1,12 +1,15 @@
-// import express, { Request, Response } from "express";
-// import runChat from "../services/chatbotService"
+
 import { Router } from "express";
-import {chatbot} from "../controllers/chatbot";
-// import { botware } from "../middlewares/botMiddleware";
+import {chatbot, messagesArray, databaseReply } from "../controllers/chatbot";
+
+
 
 
 const router = Router();
 
 router.post("/chatbot", chatbot);
+
+router.get("/chatbot/messages", messagesArray)
+router.get("/chatbot/:id", databaseReply)
   
 export default router

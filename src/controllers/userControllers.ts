@@ -9,6 +9,7 @@ import bcrypt from 'bcrypt';
 
 import { Request, Response, NextFunction } from 'express';
 
+let messages: string[] = [];
 
 
 //Signup
@@ -103,5 +104,5 @@ const forgotPassword = async (req: Request, res: Response): Promise<void> => {
 // }
 
 
-export { createUser, loginUser}
+export { createUser, loginUser, messages }
 // , forgotPassword 

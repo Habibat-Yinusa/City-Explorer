@@ -6,6 +6,8 @@ interface UserAttributes {
   password: string;
   passwordResetToken: string;
   passwordResetTokenExpires: Date;
+  userMessages: string[];
+  botReplies: string[];
   
 }
 
@@ -19,6 +21,8 @@ const userSchema = new Schema<UserDocument>({
   password: { type: String, required: true },
   passwordResetToken: {type: String},
   passwordResetTokenExpires: { type: Date },
+  userMessages: { type: [String], default: [] },
+  botReplies: { type: [String], default: [] },
   // createResetPasswordToken(): { type: string },
   
 });

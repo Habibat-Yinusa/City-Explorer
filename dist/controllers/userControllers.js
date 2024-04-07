@@ -12,11 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginUser = exports.createUser = void 0;
+exports.messages = exports.loginUser = exports.createUser = void 0;
 const user_1 = __importDefault(require("../models/user"));
 const bcrypt_1 = require("bcrypt");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const bcrypt_2 = __importDefault(require("bcrypt"));
+let messages = [];
+exports.messages = messages;
 //Signup
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
