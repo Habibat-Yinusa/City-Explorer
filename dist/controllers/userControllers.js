@@ -56,7 +56,7 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             userId: user._id, email: user.email, username: user.username
         }, process.env.JWT_SECRET, { expiresIn: "90d" });
         res.status(200).send({
-            token, id: user.id
+            token, id: user.id, username: user.username
         });
     }
     catch (error) {

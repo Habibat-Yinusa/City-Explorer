@@ -63,7 +63,7 @@ const loginUser = async (req: Request, res: Response): Promise<void> => {
         }, process.env.JWT_SECRET!, { expiresIn: "90d" });
 
         res.status(200).send({
-            token, id: user.id
+            token, id: user.id, username: user.username
         });
     } catch (error: any) {
         res.status(400).send({ message: error.message });
