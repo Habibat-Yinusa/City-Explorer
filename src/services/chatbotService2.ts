@@ -4,13 +4,14 @@ import {
   HarmBlockThreshold,
 } from "@google/generative-ai";
 import dotenv from "dotenv";
+import type { Content } from "@google/generative-ai";
 
 dotenv.config();
 
 const MODEL_NAME = "gemini-1.0-pro";
 const API_KEY: string = process.env.GOOGLE_API_KEY!;
 
-export default async function runChat(message: string) {
+export default async function runChat(message: string, history: Content[]) {
   const genAI = new GoogleGenerativeAI(API_KEY);
   const model = genAI.getGenerativeModel({ model: MODEL_NAME });
 
@@ -1861,7 +1862,7 @@ export default async function runChat(message: string) {
             text: "Okay, Here is a suggestion: Restaurant: Blu cabana, Address: Blue cabana - 1322 Shehu Yar'adua Wy, Mabushi, Abuja 900108, Federal Capital Territory, Dining Experience: Fine Dining /Oudoor Seating/Lounge, Cuisine: Mexican/Italian/Nigerian, Price range: Mid range-Upscale, Contact: 0810 090 0000",
           },
         ],
-      },
+      },...history
     ],
   });
 
