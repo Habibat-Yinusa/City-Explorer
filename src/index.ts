@@ -15,8 +15,9 @@ dotenv.config();
 connectDB();
 
 const app = express();
-const port = 3000;
 app.use(cors())
+const port = 3000;
+
 // app.use(cors({
 //   credentials: true,
 // }));
@@ -30,6 +31,7 @@ app.use(express.json())
 //end-points
 app.use("/user", userRoutes)
 app.use("/", chatbotRoute)
+app.options('/chatbot', cors());
 
 
 app.listen(port, () => {
