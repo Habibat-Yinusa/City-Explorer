@@ -19,24 +19,47 @@ const user_1 = __importDefault(require("../models/user"));
 //SEND AND GET REPLY FROM BOT
 const chatbot = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { _id, message } = req.body;
+    const user = yield user_1.default.findById(_id);
+    const userMessages = user === null || user === void 0 ? void 0 : user.userMessages;
+    const botReplies = user === null || user === void 0 ? void 0 : user.botReplies;
+    let history = [];
+    for (let i = 0; i < userMessages.length; i++) {
+        if (userMessages && botReplies) {
+            const newHistory = [
+                {
+                    role: "user",
+                    parts: [
+                        {
+                            text: userMessages[i] || "",
+                        },
+                    ],
+                },
+                {
+                    role: "model",
+                    parts: [
+                        {
+                            text: botReplies[i] || "",
+                        },
+                    ],
+                },
+            ];
+            // console.log(newHistory);
+            history = [...history, ...newHistory];
+        }
+    }
     if (!_id) {
-        const reply = yield (0, chatbotService2_1.default)(message);
-        const formattedReply = yield formatAIReply(reply);
-        res.json(formattedReply);
-        userControllers_1.messages.push(formattedReply);
-        console.log(userControllers_1.messages);
+        const reply = yield (0, chatbotService2_1.default)(message, history);
+        res.json(reply);
+        userControllers_1.messages.push(reply);
+        console.log(userControllers_1.messages, "unregistered");
     }
     else {
         const user = yield user_1.default.findOne({ _id });
-        const reply = yield (0, chatbotService2_1.default)(message);
-        const formattedReply = yield formatAIReply(reply);
-        console.log(formattedReply);
-        // push to database array fields
+        const reply = yield (0, chatbotService2_1.default)(message, history);
         user === null || user === void 0 ? void 0 : user.userMessages.push(message);
-        user === null || user === void 0 ? void 0 : user.botReplies.push(formattedReply);
-        res.json(user === null || user === void 0 ? void 0 : user.botReplies);
-        //save to db
+        user === null || user === void 0 ? void 0 : user.botReplies.push(reply);
         yield (user === null || user === void 0 ? void 0 : user.save());
+        res.json(reply.split("*").join(""));
     }
 });
 exports.chatbot = chatbot;
@@ -64,19 +87,3 @@ const databaseReply = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.databaseReply = databaseReply;
-// FORMATTING RESPONSE
-function formatAIReply(description) {
-    return new Promise((resolve, reject) => {
-        try {
-            // Replace double asterisks with <strong> tags for bold text
-            let formattedAnswer = description.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-            // Replace newlines with <br> tags for line breaks
-            formattedAnswer = formattedAnswer.replace(/\n/g, '<br>');
-            // Wrap the entire description in a <div> tag with a class for styling
-            resolve(`<div class="restaurant-description">${formattedAnswer}</div>`);
-        }
-        catch (error) {
-            reject(error);
-        }
-    });
-}

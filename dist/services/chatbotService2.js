@@ -17,7 +17,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const MODEL_NAME = "gemini-1.0-pro";
 const API_KEY = process.env.GOOGLE_API_KEY;
-function runChat(message) {
+function runChat(message, history) {
     return __awaiter(this, void 0, void 0, function* () {
         const genAI = new generative_ai_1.GoogleGenerativeAI(API_KEY);
         const model = genAI.getGenerativeModel({ model: MODEL_NAME });
@@ -1866,7 +1866,7 @@ function runChat(message) {
                             text: "Okay, Here is a suggestion: Restaurant: Blu cabana, Address: Blue cabana - 1322 Shehu Yar'adua Wy, Mabushi, Abuja 900108, Federal Capital Territory, Dining Experience: Fine Dining /Oudoor Seating/Lounge, Cuisine: Mexican/Italian/Nigerian, Price range: Mid range-Upscale, Contact: 0810 090 0000",
                         },
                     ],
-                },
+                }, ...history
             ],
         });
         const result = yield chat.sendMessage(message);
