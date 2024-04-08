@@ -31,6 +31,7 @@ app.use(express.json())
 //end-points
 app.use("/user", userRoutes)
 app.use("/", chatbotRoute)
+app.options('/*', cors());
 app.options('/chatbot', cors());
 
 
