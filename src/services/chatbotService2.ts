@@ -12,6 +12,9 @@ const MODEL_NAME = "gemini-1.0-pro";
 const API_KEY: string = process.env.GOOGLE_API_KEY!;
 
 export default async function runChat(message: string, history: Content[]) {
+  try {
+    
+  
   const genAI = new GoogleGenerativeAI(API_KEY);
   const model = genAI.getGenerativeModel({ model: MODEL_NAME });
 
@@ -1871,4 +1874,9 @@ export default async function runChat(message: string, history: Content[]) {
   const response = result.response;
 
   return response.text();
+} catch (error: any) {
+    console.log({ message: error.message });
+    return error.message;
+    
+}
 }

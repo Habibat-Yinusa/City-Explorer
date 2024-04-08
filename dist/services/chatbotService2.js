@@ -19,41 +19,42 @@ const MODEL_NAME = "gemini-1.0-pro";
 const API_KEY = process.env.GOOGLE_API_KEY;
 function runChat(message, history) {
     return __awaiter(this, void 0, void 0, function* () {
-        const genAI = new generative_ai_1.GoogleGenerativeAI(API_KEY);
-        const model = genAI.getGenerativeModel({ model: MODEL_NAME });
-        const generationConfig = {
-            temperature: 0.9,
-            topK: 1,
-            topP: 1,
-            maxOutputTokens: 2048,
-        };
-        const safetySettings = [
-            {
-                category: generative_ai_1.HarmCategory.HARM_CATEGORY_HARASSMENT,
-                threshold: generative_ai_1.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-            },
-            {
-                category: generative_ai_1.HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-                threshold: generative_ai_1.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-            },
-            {
-                category: generative_ai_1.HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
-                threshold: generative_ai_1.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-            },
-            {
-                category: generative_ai_1.HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-                threshold: generative_ai_1.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-            },
-        ];
-        const chat = model.startChat({
-            generationConfig,
-            safetySettings,
-            history: [
+        try {
+            const genAI = new generative_ai_1.GoogleGenerativeAI(API_KEY);
+            const model = genAI.getGenerativeModel({ model: MODEL_NAME });
+            const generationConfig = {
+                temperature: 0.9,
+                topK: 1,
+                topP: 1,
+                maxOutputTokens: 2048,
+            };
+            const safetySettings = [
                 {
-                    role: "user",
-                    parts: [
-                        {
-                            text: `\n\nYour name is City Explorer. Greet the user and introduce yourself, ask how you can be of help to them. \n\nBased on the users question, you are to recommend to them what they want based on the list of \n\nrestaurants in Abuja strictly from the json data below by their location, menu, type of cuisine, price rates and open hours and days. Use the following JSON data to make decisions and stay within context. For a particular question, give atleast 3 recommendations if possible \n\n [
+                    category: generative_ai_1.HarmCategory.HARM_CATEGORY_HARASSMENT,
+                    threshold: generative_ai_1.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+                },
+                {
+                    category: generative_ai_1.HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+                    threshold: generative_ai_1.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+                },
+                {
+                    category: generative_ai_1.HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+                    threshold: generative_ai_1.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+                },
+                {
+                    category: generative_ai_1.HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+                    threshold: generative_ai_1.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+                },
+            ];
+            const chat = model.startChat({
+                generationConfig,
+                safetySettings,
+                history: [
+                    {
+                        role: "user",
+                        parts: [
+                            {
+                                text: `\n\nYour name is City Explorer. Greet the user and introduce yourself, ask how you can be of help to them. \n\nBased on the users question, you are to recommend to them what they want based on the list of \n\nrestaurants in Abuja strictly from the json data below by their location, menu, type of cuisine, price rates and open hours and days. Use the following JSON data to make decisions and stay within context. For a particular question, give atleast 3 recommendations if possible \n\n [
   {
     "Restaurants": "LOMO Coffee and Restaurant",
     "Address": "Lomo coffee and restaurant - 107 Ebitu Ukiwe St, Jabi, Abuja 240102, Federal Capital Territory",
@@ -1814,64 +1815,69 @@ function runChat(message, history) {
     "Contact": "0803 901 3000"
   }
 ]`,
-                        },
-                    ],
-                },
-                {
-                    role: "model",
-                    parts: [
-                        {
-                            text: "Hello there! I'm City Explorer, your virtual guide to all things delicious in the city. What are you craving today? Tell me what you're in the mood for, and I'll recommend the perfect restaurant for you based on your preferences.",
-                        },
-                    ],
-                },
-                {
-                    role: "user",
-                    parts: [
-                        { text: "I want amala and egusi soup, where can i get it please?" },
-                    ],
-                },
-                {
-                    role: "model",
-                    parts: [
-                        {
-                            text: "If you're craving amala and egusi soup, the perfect place for you is **Amala Spot** in Gwarimpa. They specialize in traditional Nigerian dishes, and their menu features a wide variety of soups, including egusi, ogbono, and gbegiri, to pair with your amala. They're open every day of the week, so you can satisfy your cravings any time!",
-                        },
-                    ],
-                },
-                {
-                    role: "user",
-                    parts: [{ text: "what about ice cream? any idea?" }],
-                },
-                {
-                    role: "model",
-                    parts: [
-                        {
-                            text: "For delicious ice cream, you have two options:\n\n* **Pizza Hut:** They offer ice cream alongside their pizzas and other fast food options. They have locations in both Maitama and Garki, and they're open Monday to Friday.\n* **Dominos:** They also offer ice cream along with pizzas and other dishes. They have locations in Apo and Gwarimpa, but they're only open on weekends.\n\nSo, depending on the day and your location preference, you can choose either Pizza Hut or Dominos for your ice cream fix!",
-                        },
-                    ],
-                },
-                {
-                    role: "user",
-                    parts: [
-                        {
-                            text: "Where can i get lunch and Mabushi, Remember to add Address, Contact, and other important info from the list i gave you earlier",
-                        },
-                    ],
-                },
-                {
-                    role: "model",
-                    parts: [
-                        {
-                            text: "Okay, Here is a suggestion: Restaurant: Blu cabana, Address: Blue cabana - 1322 Shehu Yar'adua Wy, Mabushi, Abuja 900108, Federal Capital Territory, Dining Experience: Fine Dining /Oudoor Seating/Lounge, Cuisine: Mexican/Italian/Nigerian, Price range: Mid range-Upscale, Contact: 0810 090 0000",
-                        },
-                    ],
-                }, ...history
-            ],
-        });
-        const result = yield chat.sendMessage(message);
-        const response = result.response;
-        return response.text();
+                            },
+                        ],
+                    },
+                    {
+                        role: "model",
+                        parts: [
+                            {
+                                text: "Hello there! I'm City Explorer, your virtual guide to all things delicious in the city. What are you craving today? Tell me what you're in the mood for, and I'll recommend the perfect restaurant for you based on your preferences.",
+                            },
+                        ],
+                    },
+                    {
+                        role: "user",
+                        parts: [
+                            { text: "I want amala and egusi soup, where can i get it please?" },
+                        ],
+                    },
+                    {
+                        role: "model",
+                        parts: [
+                            {
+                                text: "If you're craving amala and egusi soup, the perfect place for you is **Amala Spot** in Gwarimpa. They specialize in traditional Nigerian dishes, and their menu features a wide variety of soups, including egusi, ogbono, and gbegiri, to pair with your amala. They're open every day of the week, so you can satisfy your cravings any time!",
+                            },
+                        ],
+                    },
+                    {
+                        role: "user",
+                        parts: [{ text: "what about ice cream? any idea?" }],
+                    },
+                    {
+                        role: "model",
+                        parts: [
+                            {
+                                text: "For delicious ice cream, you have two options:\n\n* **Pizza Hut:** They offer ice cream alongside their pizzas and other fast food options. They have locations in both Maitama and Garki, and they're open Monday to Friday.\n* **Dominos:** They also offer ice cream along with pizzas and other dishes. They have locations in Apo and Gwarimpa, but they're only open on weekends.\n\nSo, depending on the day and your location preference, you can choose either Pizza Hut or Dominos for your ice cream fix!",
+                            },
+                        ],
+                    },
+                    {
+                        role: "user",
+                        parts: [
+                            {
+                                text: "Where can i get lunch and Mabushi, Remember to add Address, Contact, and other important info from the list i gave you earlier",
+                            },
+                        ],
+                    },
+                    {
+                        role: "model",
+                        parts: [
+                            {
+                                text: "Okay, Here is a suggestion: Restaurant: Blu cabana, Address: Blue cabana - 1322 Shehu Yar'adua Wy, Mabushi, Abuja 900108, Federal Capital Territory, Dining Experience: Fine Dining /Oudoor Seating/Lounge, Cuisine: Mexican/Italian/Nigerian, Price range: Mid range-Upscale, Contact: 0810 090 0000",
+                            },
+                        ],
+                    }, ...history
+                ],
+            });
+            const result = yield chat.sendMessage(message);
+            const response = result.response;
+            return response.text();
+        }
+        catch (error) {
+            console.log({ message: error.message });
+            return error.message;
+        }
     });
 }
 exports.default = runChat;
