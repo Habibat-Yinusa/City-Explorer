@@ -11,6 +11,14 @@
         {
             "src": "/(.*)",
             "dest": "dist/index.js"
-        }
+        },
+              {
+                "src": "/api/chatbot",
+                "dest": "src/routes/chatbotRoute.ts",
+                "methods": ["POST"],
+                "apiTimeout": 30000
+              }
+          
     ]
 }
+
