@@ -13,24 +13,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.databaseReply = exports.messagesArray = exports.chatbot = void 0;
-const chatbotService_1 = __importDefault(require("../services/chatbotService"));
+const chatbotService2_1 = __importDefault(require("../services/chatbotService2"));
 const userControllers_1 = require("./userControllers");
 const user_1 = __importDefault(require("../models/user"));
 //SEND AND GET REPLY FROM BOT
 const chatbot = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { _id, message } = req.body;
     if (!_id) {
-        const reply = yield (0, chatbotService_1.default)(message);
-        res.json(reply);
-        userControllers_1.messages.push(reply);
-        console.log(userControllers_1.messages, "unregistered");
+        const reply = yield (0, chatbotService2_1.default)(message);
+        const formattedReply = yield formatAIReply(reply);
+        res.json(formattedReply);
+        userControllers_1.messages.push(formattedReply);
+        console.log(userControllers_1.messages);
     }
     else {
         const user = yield user_1.default.findOne({ _id });
-        const reply = yield (0, chatbotService_1.default)(message);
+        const reply = yield (0, chatbotService2_1.default)(message);
+        const formattedReply = yield formatAIReply(reply);
+        console.log(formattedReply);
+        // push to database array fields
         user === null || user === void 0 ? void 0 : user.userMessages.push(message);
-        user === null || user === void 0 ? void 0 : user.botReplies.push(reply);
+        user === null || user === void 0 ? void 0 : user.botReplies.push(formattedReply);
         res.json(user === null || user === void 0 ? void 0 : user.botReplies);
+        //save to db
         yield (user === null || user === void 0 ? void 0 : user.save());
     }
 });
@@ -59,3 +64,19 @@ const databaseReply = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.databaseReply = databaseReply;
+// FORMATTING RESPONSE
+function formatAIReply(description) {
+    return new Promise((resolve, reject) => {
+        try {
+            // Replace double asterisks with <strong> tags for bold text
+            let formattedAnswer = description.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            // Replace newlines with <br> tags for line breaks
+            formattedAnswer = formattedAnswer.replace(/\n/g, '<br>');
+            // Wrap the entire description in a <div> tag with a class for styling
+            resolve(`<div class="restaurant-description">${formattedAnswer}</div>`);
+        }
+        catch (error) {
+            reject(error);
+        }
+    });
+}

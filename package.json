@@ -28,6 +28,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.5.0",
     "mongoose": "^8.2.4",
+    "twilio": "^5.0.3",
     "typescript": "^5.4.3"
   },
   "devDependencies": {
