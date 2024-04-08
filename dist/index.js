@@ -39,9 +39,10 @@ dotenv.config();
 (0, db_1.connectDB)();
 const app = (0, express_1.default)();
 const port = 3000;
-app.use((0, cors_1.default)({
-    credentials: true,
-}));
+app.use((0, cors_1.default)());
+// app.use(cors({
+//   credentials: true,
+// }));
 //middlewares
 app.use((0, compression_1.default)());
 app.use((0, cookie_parser_1.default)());

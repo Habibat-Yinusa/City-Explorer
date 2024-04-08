@@ -16,10 +16,10 @@ connectDB();
 
 const app = express();
 const port = 3000;
-
-app.use(cors({
-  credentials: true,
-}));
+app.use(cors())
+// app.use(cors({
+//   credentials: true,
+// }));
 
 //middlewares
 app.use(compression());
